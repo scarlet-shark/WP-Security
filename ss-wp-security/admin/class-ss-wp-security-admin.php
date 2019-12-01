@@ -107,7 +107,7 @@ class SS_WP_Security_Admin {
 	  $ip = $_SERVER['REMOTE_ADDR'];
 	  $user_agent = esc_sql($_SERVER['HTTP_USER_AGENT']);
 
-		$table_name = $wpdb->prefix . "littlebonsai_failed_logins";
+		$table_name = $wpdb->prefix . "scarletshark_failed_logins";
 		$results = $wpdb->get_results("SELECT id, seen_count, reported, reported_time FROM $table_name WHERE ip='$ip' AND user_agent='$user_agent'");
 
 		if (sizeof($results) == 0) {
@@ -147,12 +147,12 @@ class SS_WP_Security_Admin {
 			if ($seen_count_new > 2) {
 				if ($reported == False) {
 					/* Get API key */
-					$table_name = $wpdb->prefix . "littlebonsai_settings";
+					$table_name = $wpdb->prefix . "scarletshark_settings";
 					$results = $wpdb->get_results("SELECT setting_value FROM $table_name WHERE setting_name='api_key'");
 					$api_key = $results[0]->setting_value;
 
 					$url = 'https://scarletshark.com/api/v0.1/report_ip.php';
-				  $data = array('ip' => $ip, 'user_agent' => $user_agent, 'comment' => 'WordPress Login Brute-forcing', 'tags' => 'malicious-login,wordpress', 'ref_url' => 'https://littlebonsai.co/docs/reported-ip-tags.html#WordPressLoginBrute-forcing');
+				  $data = array('ip' => $ip, 'user_agent' => $user_agent, 'comment' => 'WordPress Login Brute-forcing', 'tags' => 'malicious-login,wordpress', 'ref_url' => 'https://scarletshark.com/docs/reported-ip-tags.html#WordPressLoginBrute-forcing');
 
 				  $options = array(
 				      'http' => array(
@@ -170,7 +170,7 @@ class SS_WP_Security_Admin {
 						echo ("Error adm-inc-01");
 					} else {
 						/* Change status to reported */
-						$table_name = $wpdb->prefix . "littlebonsai_failed_logins";
+						$table_name = $wpdb->prefix . "scarletshark_failed_logins";
 
 						$wpdb->update(
 							$table_name,
@@ -197,7 +197,7 @@ class SS_WP_Security_Admin {
 	  $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
 		/* Add successful login info to table */
-		$table_name = $wpdb->prefix . "littlebonsai_successful_logins";
+		$table_name = $wpdb->prefix . "scarletshark_successful_logins";
 
 		$wpdb->insert(
 			$table_name,
@@ -209,7 +209,7 @@ class SS_WP_Security_Admin {
 		);
 
 		/* Reset failed logins count */
-		$table_name = $wpdb->prefix . "littlebonsai_failed_logins";
+		$table_name = $wpdb->prefix . "scarletshark_failed_logins";
 		$results = $wpdb->get_results("SELECT id FROM $table_name WHERE ip='$ip' AND user_agent='$user_agent'");
 
 		if (sizeof($results) > 0) {
@@ -240,7 +240,7 @@ class SS_WP_Security_Admin {
 
 	function comment_blacklist_check($author_name, $author_email, $author_url, $comment_text, $author_ip_address, $author_user_agent) {
 		return False;
-		//get score data from littlebonsai
+		//get score data from scarletshark
 		//score for user_agent, ip_address, email, url
 		//add up scores to see if they meet a threashold
 		//execute a wp_die to reject the comment, if threshold is reached.

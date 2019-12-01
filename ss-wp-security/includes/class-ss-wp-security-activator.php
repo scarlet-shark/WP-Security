@@ -38,7 +38,7 @@ class SS_WP_Security_Activator {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		/* Failed logins */
-		$table_name = $wpdb->prefix . "littlebonsai_failed_logins";
+		$table_name = $wpdb->prefix . "scarletshark_failed_logins";
 		$sql = "CREATE TABLE $table_name (
 		  id mediumint(9) NOT NULL AUTO_INCREMENT,
 			ip tinytext NOT NULL,
@@ -54,7 +54,7 @@ class SS_WP_Security_Activator {
 		dbDelta( $sql );
 
 		/* successful logins */
-		$table_name = $wpdb->prefix . "littlebonsai_successful_logins";
+		$table_name = $wpdb->prefix . "scarletshark_successful_logins";
 		$sql = "CREATE TABLE $table_name (
 		  id mediumint(9) NOT NULL AUTO_INCREMENT,
 			ip tinytext NOT NULL,
@@ -67,7 +67,7 @@ class SS_WP_Security_Activator {
 		dbDelta( $sql );
 
 		/* settings table */
-		$table_name = $wpdb->prefix . "littlebonsai_settings";
+		$table_name = $wpdb->prefix . "scarletshark_settings";
 		$sql = "CREATE TABLE $table_name (
 			setting_id mediumint(9) NOT NULL AUTO_INCREMENT,
 			setting_name tinytext NOT NULL,
